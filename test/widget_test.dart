@@ -8,23 +8,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:labo2/main.dart';
+import 'package:labo2/aplicacion/aplicacion_labo2.dart';
+import 'package:labo2/aplicacion/rutas.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('navegacion basica', (WidgetTester tester) async {
+    await tester.pumpWidget(const AplicacionLabo2());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Splash
+    expect(find.text('labo2'), findsOneWidget);
+    await tester.pump(const Duration(seconds: 2));
+    await tester.pumpAndSettle();
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Inicio
+    expect(find.text('laboratorio'), findsOneWidget);
+    await tester.tap(find.text('problema 1: venta'));
+    await tester.pumpAndSettle();
+    expect(find.text('venta'), findsOneWidget);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Pop
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    expect(find.text('laboratorio'), findsOneWidget);
+
+    // pushNamed a inversion
+    Navigator.of(
+      tester.element(find.text('laboratorio')),
+    ).pushNamed(Rutas.inversion);
+    await tester.pumpAndSettle();
+    expect(find.text('inversion'), findsOneWidget);
   });
 }
