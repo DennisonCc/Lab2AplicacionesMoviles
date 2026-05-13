@@ -13,19 +13,33 @@ class PaginaPromedios extends StatefulWidget {
 }
 
 class _PaginaPromediosState extends State<PaginaPromedios> {
+  final ScrollController _scrollController = ScrollController();
   ResultadoPromedios? _resultado;
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return PlantillaScaffold(
-      titulo: 'promedios',
+      titulo: 'Promedios',
+      scrollController: _scrollController,
       child: Column(
         children: [
           FormularioPromedios(
             onCalcular: (entrada) {
-              setState(
-                () => _resultado = calcularPromedios(entrada.edadesPorSalon),
-              );
+              setState(() => _resultado = calcularPromedios(entrada.edadesPorSalon));
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (!_scrollController.hasClients) return;
+                _scrollController.animateTo(
+                  _scrollController.position.maxScrollExtent,
+                  duration: const Duration(milliseconds: 350),
+                  curve: Curves.easeOut,
+                );
+              });
             },
           ),
           const SizedBox(height: 16),

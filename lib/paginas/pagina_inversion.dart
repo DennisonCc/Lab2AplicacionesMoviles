@@ -13,12 +13,20 @@ class PaginaInversion extends StatefulWidget {
 }
 
 class _PaginaInversionState extends State<PaginaInversion> {
+  final ScrollController _scrollController = ScrollController();
   ResultadoInversion? _resultado;
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return PlantillaScaffold(
-      titulo: 'inversion',
+      titulo: 'Inversión',
+      scrollController: _scrollController,
       child: Column(
         children: [
           FormularioInversion(
@@ -27,6 +35,14 @@ class _PaginaInversionState extends State<PaginaInversion> {
                 _resultado = calcularInversion(
                   aporteMensual: entrada.aporteMensual,
                   anios: entrada.anios,
+                );
+              });
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (!_scrollController.hasClients) return;
+                _scrollController.animateTo(
+                  _scrollController.position.maxScrollExtent,
+                  duration: const Duration(milliseconds: 350),
+                  curve: Curves.easeOut,
                 );
               });
             },

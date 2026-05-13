@@ -29,7 +29,7 @@ class _FormularioVentaState extends State<FormularioVenta> {
     final texto = _controlSubtotal.text.trim().replaceAll(',', '.');
     final valor = double.tryParse(texto);
     if (valor == null || valor < 0) {
-      setState(() => _error = 'ingresa un subtotal valido');
+      setState(() => _error = 'Ingresa un subtotal valido');
       return;
     }
     widget.onCalcular(valor);
@@ -42,23 +42,25 @@ class _FormularioVentaState extends State<FormularioVenta> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const EncabezadoSeccion(
-            titulo: 'datos de venta',
+            titulo: 'Datos de venta',
             subtitulo: 'iva 15% y descuento 20% si subtotal > 2000',
           ),
           CampoEtiquetado(
             controlador: _controlSubtotal,
-            etiqueta: 'subtotal (usd)',
+            etiqueta: 'Subtotal (usd)',
             hint: 'ej: 1500.50',
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
           ),
           if (_error != null) ...[
             Text(
               _error!,
-              style: TextStyle(color: Theme.of(context).colorScheme.error),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.error,
+              ),
             ),
             const SizedBox(height: 12),
           ],
-          BotonPrincipal(texto: 'calcular', onPressed: _calcular),
+          BotonPrincipal(texto: 'Calcular', onPressed: _calcular),
         ],
       ),
     );

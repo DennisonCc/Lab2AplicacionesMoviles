@@ -101,7 +101,7 @@ class _FormularioPromediosState extends State<FormularioPromedios> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const EncabezadoSeccion(
-            titulo: 'datos de salones',
+            titulo: 'Datos de Salones',
             subtitulo:
                 'N variable por salon: ingresa edades separadas por coma o espacio',
           ),
@@ -110,21 +110,21 @@ class _FormularioPromediosState extends State<FormularioPromedios> {
               Expanded(
                 child: CampoEtiquetado(
                   controlador: _controlCantidad,
-                  etiqueta: 'cantidad de salones (M)',
+                  etiqueta: 'Cantidad de salones (M)',
                   keyboardType: TextInputType.number,
                 ),
               ),
               const SizedBox(width: 12),
               FilledButton(
                 onPressed: _actualizarCantidad,
-                child: const Text('aplicar'),
+                child: const Text('Aplicar'),
               ),
             ],
           ),
           for (var i = 0; i < _cantidadSalones; i++) ...[
             CampoEtiquetado(
               controlador: _controlesEdades[i],
-              etiqueta: 'edades salon ${i + 1}',
+              etiqueta: 'Edades salon ${i + 1}',
               hint: 'ej: 10, 11, 9, 12',
               keyboardType: TextInputType.text,
             ),
@@ -132,11 +132,13 @@ class _FormularioPromediosState extends State<FormularioPromedios> {
           if (_error != null) ...[
             Text(
               _error!,
-              style: TextStyle(color: Theme.of(context).colorScheme.error),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.error,
+              ),
             ),
             const SizedBox(height: 12),
           ],
-          BotonPrincipal(texto: 'calcular', onPressed: _calcular),
+          BotonPrincipal(texto: 'Calcular', onPressed: _calcular),
         ],
       ),
     );

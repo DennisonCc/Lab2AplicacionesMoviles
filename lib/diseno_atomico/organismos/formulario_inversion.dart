@@ -41,11 +41,11 @@ class _FormularioInversionState extends State<FormularioInversion> {
     final anios = int.tryParse(_controlAnios.text.trim());
 
     if (aporte == null || aporte <= 0) {
-      setState(() => _error = 'ingresa un aporte mensual valido');
+      setState(() => _error = 'Ingresa un aporte mensual valido');
       return;
     }
     if (anios == null || anios <= 0) {
-      setState(() => _error = 'ingresa anios validos');
+      setState(() => _error = 'Ingresa años validos');
       return;
     }
 
@@ -59,29 +59,31 @@ class _FormularioInversionState extends State<FormularioInversion> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const EncabezadoSeccion(
-            titulo: 'datos de inversion',
-            subtitulo: '10% interes anual, aporte mensual fijo',
+            titulo: 'Datos de Inversión',
+            subtitulo: '10% interés anual, aporte mensual fijo',
           ),
           CampoEtiquetado(
             controlador: _controlAporte,
-            etiqueta: 'aporte mensual (usd)',
+            etiqueta: 'Aporte mensual (usd)',
             hint: 'ej: 100',
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
           ),
           CampoEtiquetado(
             controlador: _controlAnios,
-            etiqueta: 'anios',
+            etiqueta: 'Años de inversión',
             hint: 'ej: 5',
             keyboardType: TextInputType.number,
           ),
           if (_error != null) ...[
             Text(
               _error!,
-              style: TextStyle(color: Theme.of(context).colorScheme.error),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.error,
+              ),
             ),
             const SizedBox(height: 12),
           ],
-          BotonPrincipal(texto: 'calcular', onPressed: _calcular),
+          BotonPrincipal(texto: 'Calcular', onPressed: _calcular),
         ],
       ),
     );

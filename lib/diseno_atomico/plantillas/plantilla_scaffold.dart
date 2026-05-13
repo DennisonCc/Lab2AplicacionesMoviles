@@ -5,10 +5,12 @@ class PlantillaScaffold extends StatelessWidget {
     super.key,
     required this.titulo,
     required this.child,
+    this.scrollController,
   });
 
   final String titulo;
   final Widget child;
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,11 @@ class PlantillaScaffold extends StatelessWidget {
         leading: BackButton(onPressed: () => Navigator.pop(context)),
       ),
       body: SafeArea(
-        child: ListView(padding: const EdgeInsets.all(16), children: [child]),
+        child: ListView(
+          controller: scrollController,
+          padding: const EdgeInsets.all(16),
+          children: [child],
+        ),
       ),
     );
   }

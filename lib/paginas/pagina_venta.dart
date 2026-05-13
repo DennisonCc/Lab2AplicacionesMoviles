@@ -13,19 +13,33 @@ class PaginaVenta extends StatefulWidget {
 }
 
 class _PaginaVentaState extends State<PaginaVenta> {
+  final ScrollController _scrollController = ScrollController();
   ResultadoVenta? _resultado;
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return PlantillaScaffold(
-      titulo: 'venta',
+      titulo: 'Venta',
+      scrollController: _scrollController,
       child: Column(
         children: [
           FormularioVenta(
             onCalcular: (subtotal) {
-              setState(
-                () => _resultado = calcularVenta(EntradaVenta(subtotal)),
-              );
+              setState(() => _resultado = calcularVenta(EntradaVenta(subtotal)));
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (!_scrollController.hasClients) return;
+                _scrollController.animateTo(
+                  _scrollController.position.maxScrollExtent,
+                  duration: const Duration(milliseconds: 350),
+                  curve: Curves.easeOut,
+                );
+              });
             },
           ),
           const SizedBox(height: 16),

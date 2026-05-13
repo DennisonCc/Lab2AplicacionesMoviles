@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../../dominio/calculo_promedios.dart';
+import '../../dominio/calculo_caja_registradora.dart';
 import '../atomos/tarjeta_app.dart';
 import '../moleculas/encabezado_seccion.dart';
 
-class ResultadosPromedios extends StatelessWidget {
-  const ResultadosPromedios({super.key, required this.resultado});
+class ResultadoCajaRegistradoraWidget extends StatelessWidget {
+  const ResultadoCajaRegistradoraWidget({super.key, required this.resultado});
 
-  final ResultadoPromedios resultado;
+  final ResultadoCajaRegistradora resultado;
+
+  String _moneda(double valor) => valor.toStringAsFixed(2);
 
   @override
   Widget build(BuildContext context) {
@@ -15,19 +17,17 @@ class ResultadosPromedios extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const EncabezadoSeccion(titulo: 'Promedios'),
-          for (final r in resultado.porSalon) ...[
-            _fila(
-              context,
-              'Salon ${r.indiceSalon} (${r.cantidadAlumnos} alumnos)',
-              r.promedio.toStringAsFixed(2),
-            ),
-          ],
+          const EncabezadoSeccion(titulo: 'Resultado'),
+          _fila(context, 'Piezas de billetes', '${resultado.totalPiezasBilletes}'),
+          _fila(context, 'Total billetes', '\$${_moneda(resultado.totalBilletes)}'),
+          const Divider(),
+          _fila(context, 'Piezas de monedas', '${resultado.totalPiezasMonedas}'),
+          _fila(context, 'Total monedas', '\$${_moneda(resultado.totalMonedas)}'),
           const Divider(),
           _fila(
             context,
-            'Promedio general (${resultado.totalAlumnos} alumnos)',
-            resultado.promedioGeneral.toStringAsFixed(2),
+            'Total general',
+            '\$${_moneda(resultado.totalGeneral)}',
             esTotal: true,
           ),
         ],

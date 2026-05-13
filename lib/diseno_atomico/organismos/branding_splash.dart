@@ -13,9 +13,9 @@ class BrandingSplash extends StatelessWidget {
       children: [
         const LogoApp(tamano: 104),
         const SizedBox(height: 16),
-        Text('labo2', style: tema.textTheme.headlineMedium),
+        Text('Labo2', style: tema.textTheme.headlineMedium),
         const SizedBox(height: 8),
-        Text('laboratorio atomic design', style: tema.textTheme.bodyMedium),
+        Text('Laboratorio Atomic Design', style: tema.textTheme.bodyMedium),
       ],
     );
   }

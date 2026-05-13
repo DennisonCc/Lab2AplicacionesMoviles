@@ -17,26 +17,28 @@ class ResultadoInversionWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const EncabezadoSeccion(titulo: 'resultado'),
-          _fila('meses', '${resultado.meses}'),
-          _fila('aporte mensual', '\$${_moneda(resultado.aporteMensual)}'),
-          _fila('aportes totales', '\$${_moneda(resultado.aportesTotales)}'),
+          const EncabezadoSeccion(titulo: 'Resultado'),
+          _fila(context, 'Meses', '${resultado.meses}'),
+          _fila(context, 'Aporte mensual', '\$${_moneda(resultado.aporteMensual)}'),
+          _fila(context, 'Aportes totales', '\$${_moneda(resultado.aportesTotales)}'),
           const Divider(),
           _fila(
-            'monto final',
+            context,
+            'Monto final',
             '\$${_moneda(resultado.montoFinal)}',
             esTotal: true,
           ),
-          _fila('interes ganado', '\$${_moneda(resultado.interesGanado)}'),
+          _fila(context, 'Interés ganado', '\$${_moneda(resultado.interesGanado)}'),
         ],
       ),
     );
   }
 
-  Widget _fila(String etiqueta, String valor, {bool esTotal = false}) {
+  Widget _fila(BuildContext context, String etiqueta, String valor, {bool esTotal = false}) {
+    final base = Theme.of(context).textTheme.bodyMedium;
     final estilo = esTotal
-        ? const TextStyle(fontWeight: FontWeight.w700)
-        : null;
+        ? Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w700)
+        : base;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
